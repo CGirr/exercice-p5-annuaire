@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+/** Classe permettant d'instancier un objet de type PDO */
+
 class DBConnect
 {
     /**

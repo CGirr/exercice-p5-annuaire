@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+/** Cette classe permet de communiquer avec la base de données */
+
 class ContactManager
 {
     /**
@@ -14,6 +16,7 @@ class ContactManager
     }
 
     /**
+     * Instancie un nouveau contact
      * @param array $items
      * @return Contact
      */
@@ -28,11 +31,12 @@ class ContactManager
     }
 
     /**
+     * Récupère tous les contacts en base de données et les stocke dans un tableau d'objets Contact
      * @return Contact[]
      */
     public function findAll(): array
     {
-        $contacts =[];
+        $contacts = [];
         $dbItems = $this->pdo->query("SELECT * FROM `contact`")->fetchAll(PDO::FETCH_ASSOC);
         foreach ($dbItems as $items)
         {
@@ -42,6 +46,7 @@ class ContactManager
     }
 
     /**
+     * Récupère le contact en base de données puis le stocke dans un object Contact
      * @param int $id
      * @return Contact|null
      */
@@ -58,6 +63,7 @@ class ContactManager
     }
 
     /**
+     * Insère un nouveau contact en base de données
      * @param string $name
      * @param string $email
      * @param string $phone
@@ -71,6 +77,38 @@ class ContactManager
             "name" => $name,
             "email" => $email,
             "phoneNumber" => $phone
+        ]);
+    }
+
+    /**
+     * Supprime le contact en base de données en fonction de son ID
+     * @param int $id
+     * @return void
+     */
+    public function delete(int $id): void
+    {
+        $dbItem = $this->pdo->prepare("DELETE FROM `contact` WHERE `id` = :id");
+        $dbItem->bindParam(":id", $id, PDO::PARAM_INT);
+        $dbItem->execute();
+    }
+
+    /**
+     * Met à jour le contact en base de données
+     * @param int $id
+     * @param string $name
+     * @param string $email
+     * @param string $phone
+     * @return void
+     */
+    public function update(int $id, string $name, string $email, string $phone): void
+    {
+        $query = 'Update contact set name = :name, email = :email, phone_number = :phoneNumber where id = :id';
+        $updateContact = $this->pdo->prepare($query);
+        $updateContact->execute([
+            "name" => $name,
+            "email" => $email,
+            "phoneNumber" => $phone,
+            "id" => $id,
         ]);
     }
 }

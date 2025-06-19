@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+/** Classe  */
+
 class Contact
 {
     /**
@@ -97,6 +99,6 @@ class Contact
      */
     public function __toString(): string
     {
-        return "Nom : ".$this->getName()." Email : ".$this->getEmail()." Numéro de téléphone : ".$this->getPhone();
+        return "ID : ".$this->getId().", Nom : ".$this->getName().", Email : ".$this->getEmail().", Numéro de téléphone : ".$this->getPhone();
     }
 }
