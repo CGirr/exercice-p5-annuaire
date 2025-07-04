@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+include 'config.php';
+
 /** Classe permettant d'instancier un objet de type PDO */
 
 class DBConnect
@@ -39,11 +41,11 @@ class DBConnect
     public function __construct()
     {
         try {
-            $this->serverName = "localhost";
-            $this->dbName = "carnet";
+            $this->serverName = DB_HOST;
+            $this->dbName = DB_NAME;
             $this->charSet = "utf8mb4";
-            $this->dbUsername = "coragirr";
-            $this->dbPassword = "Isyted00m101!";
+            $this->dbUsername = DB_USER;
+            $this->dbPassword = DB_PASS;
 
             $dsn = "mysql:host=".$this->serverName.";dbname=".$this->dbName;"charset=".$this->charSet;
             $database = new PDO($dsn, $this->dbUsername, $this->dbPassword);
